@@ -1,0 +1,24 @@
+type Emit<T> = (event: T) => void
+type Listener<T> = (event: T) => any
+type Dispose = () => void
+export type Subscribe<T> = (listener: Listener<T>, sync?: boolean | undefined) => Dispose
+
+export function event<T>(): [Emit<T>, Subscribe<T>] {
+    const listeners = new Set<(event: T) => any>()
+    const asyncListeners = new Set<(event: T) => any>()
+    return [
+        event => {
+            listeners.forEach(listener => listener(event))
+            queueMicrotask(() => {
+                asyncListeners.forEach(listener => listener(event))
+            })
+        },
+        (listener, sync) => {
+            // Passing the same callback multiple times should result in multiple independent entries.
+            const entry = (e: T) => listener(e)
+            const queue = sync ? listeners : asyncListeners
+            queue.add(entry)
+            return () => queue.delete(entry)
+        }
+    ]
+}
