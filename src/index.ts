@@ -1,13 +1,15 @@
-type Emit<T> = (event: T) => void
+type Emit<T> = undefined extends T
+    ? (event?: T) => void
+    : (event: T) => void
 type Listener<T> = (event: T) => any
 type Dispose = () => void
 export type Subscribe<T> = (listener: Listener<T>, sync?: boolean | undefined) => Dispose
 
-export function event<T>(): [Emit<T>, Subscribe<T>] {
+export function event<T = any>(): [Emit<T>, Subscribe<T>] {
     const listeners = new Set<(event: T) => any>()
     const asyncListeners = new Set<(event: T) => any>()
     return [
-        event => {
+        (event: T) => {
             listeners.forEach(listener => listener(event))
             queueMicrotask(() => {
                 asyncListeners.forEach(listener => listener(event))
