@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "skipLibCheck": true,
+        "declaration": true,
+    },
+    "exclude": [
+        "jest.config.ts"
+    ]
+}
