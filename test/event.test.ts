@@ -1,7 +1,7 @@
-import { event, Subscribe } from "../src"
+import event, { Subscribe } from "../src/event"
 
 let emit!: (event: string) => void
-let subscribe!: Subscribe<string>
+let subscribe!: Subscribe<[string]>
 let cb1!: jest.Mock
 let cb2!: jest.Mock
 
@@ -68,4 +68,10 @@ test('events not dispatched to async handlers removed in the same microtask', as
     unsub()
     await Promise.resolve()
     expect(cb1).toHaveBeenCalledTimes(0)
+})
+test('once handlers unsubscribed', () => {
+    const unsub = subscribe(cb1, true, true)
+    emit('foo')
+    emit('bar')
+    expect(cb1).toHaveBeenCalledTimes(1)
 })
