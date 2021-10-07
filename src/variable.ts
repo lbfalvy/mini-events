@@ -1,11 +1,11 @@
-import event, { Subscribe } from './event'
+import { event, Subscribe } from './event'
 
 /**
  * A variable whose updates can be observed
  * @param value default value
  * @returns [ref to data, subscriber, setter]
  */
-export default function trackedVariable<T>(value: T): [
+export function variable<T>(value: T): [
     [T],
     Subscribe<[T, T|undefined]>,
     (v: T) => void

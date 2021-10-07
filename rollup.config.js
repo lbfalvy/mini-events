@@ -1,15 +1,17 @@
 import ts from 'rollup-plugin-ts'
+import { dirname } from 'path'
 
 const pkg = require("./package.json")
 
 export default [{
     input: 'src/index.ts',
+    preserveModules: true,
     output: [{
-        file: pkg.main,
+        dir: dirname(pkg.main),
         format: 'cjs',
         sourcemap: 'inline'
     }, {
-        file: pkg.module,
+        dir: dirname(pkg.module),
         format: 'esm',
         sourcemap: 'inline'
     }],

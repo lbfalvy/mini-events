@@ -7,10 +7,10 @@ export type Subscribe<T extends any[]> =
 /**
  * Returns an emitter and a subscriber
  */
-export default function event<T0>(): [Emit<[T0]>, Subscribe<[T0]>];
-export default function event<T0, T1>(): [Emit<[T0, T1]>, Subscribe<[T0, T1]>];
-export default function event<T extends any[] = any[]>(): [Emit<T>, Subscribe<T>];
-export default function event<T extends any[]>(): [Emit<T>, Subscribe<T>] {
+export function event<T0>(): [Emit<[T0]>, Subscribe<[T0]>];
+export function event<T0, T1>(): [Emit<[T0, T1]>, Subscribe<[T0, T1]>];
+export function event<T extends any[] = any[]>(): [Emit<T>, Subscribe<T>];
+export function event<T extends any[]>(): [Emit<T>, Subscribe<T>] {
     const listeners = new Set<(args: T) => any>()
     const asyncListeners = new Set<(args: T) => any>()
     return [
