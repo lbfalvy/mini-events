@@ -1,4 +1,4 @@
-import event, { Subscribe } from "../src/event"
+import { event, Subscribe } from "../src/event"
 
 let emit!: (event: string) => void
 let subscribe!: Subscribe<[string]>

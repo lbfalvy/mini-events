@@ -1,4 +1,4 @@
-import variable from "../src/variable"
+import { variable } from "../src/variable"
 
 test('value updated and relayed', () => {
     const [data, sub, set] = variable('foo')

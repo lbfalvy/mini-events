@@ -1,11 +1,15 @@
 import ts from 'rollup-plugin-ts'
+import dts from 'rollup-plugin-dts'
 import { dirname } from 'path'
 
 const pkg = require("./package.json")
 
-export default [{
+const baseConfig = {
     input: 'src/index.ts',
     preserveModules: true,
+}
+export default [{
+    ...baseConfig,
     output: [{
         dir: dirname(pkg.main),
         format: 'cjs',
@@ -15,7 +19,12 @@ export default [{
         format: 'esm',
         sourcemap: 'inline'
     }],
-    plugins: [
-        ts(),
-    ],
+    plugins: [ts()]
+}, {
+    ...baseConfig,
+    output: {
+        dir: dirname(pkg.types),
+        format: 'esm'
+    },
+    plugins: [dts()]
 }]
