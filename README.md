@@ -42,3 +42,14 @@ unsubscribe()
 - An event handler subscribed in a given microtask MUST receive all events that a handler
 unsubscribed on the same microtask would not receive.
 - Flushing the microtask queue once MUST result in every event handler's completion.
+
+## Variable
+A little addition that I havve come to need quite often. Very simple.
+```ts
+const [set, get, subscribe] = variable('default')
+get() // ='default'
+subscribe(console.log)
+set('foo') // > 'foo', 'default'
+get() // ='foo'
+```
+Same guarantees apply as with event
