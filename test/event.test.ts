@@ -1,4 +1,5 @@
-import { event, Subscribe } from "../src/event"
+import { event } from "../src/event"
+import { Subscribe } from "../src/types"
 
 let emit!: (event: string) => void
 let subscribe!: Subscribe<[string]>
@@ -6,7 +7,7 @@ let cb1!: jest.Mock
 let cb2!: jest.Mock
 
 beforeEach(() => {
-    [emit, subscribe] = event<string>()
+    [emit, subscribe] = event<[string]>()
     cb1 = jest.fn()
     cb2 = jest.fn()
 })
