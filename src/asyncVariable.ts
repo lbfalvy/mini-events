@@ -12,7 +12,8 @@ export function asyncVariable<T>(
     value?: T
 ): [AsyncEmit<[T | undefined]>, AsyncVariable<T | undefined>, Lock<T | undefined>] {
     let current: T | undefined = value
-    let mutex: Subscribe<[]> | undefined
+    // Subscribe of latest lock request's release
+    let mutexTail: Subscribe<[]> | undefined
     const [emit, changed] = event<[T | undefined, T | undefined]>()
     return [
         v => {
@@ -23,16 +24,15 @@ export function asyncVariable<T>(
         },
         { get: () => Promise.resolve(current), changed },
         () => new Promise(res => {
-            const obtain = () => {
-                const [release, onRelease] = event()
-                onRelease(() => {
-                    if (mutex == onRelease) mutex = undefined
-                }, true, true)
-                mutex = onRelease
-                res([release, current])
-            }
-            if (!mutex) obtain()
-            else mutex(obtain, false, true)
+            const [release, onRelease] = event() // New release event
+            onRelease(() => {
+                if (mutexTail == onRelease) mutexTail = undefined
+            }, true, true) // Clear lock if last
+            // Acquisition yields release and latest value
+            const acquire = () => res([release, current])
+            if (!mutexTail) acquire() // Instantly acquire if clear
+            else mutexTail(acquire, false, true) // Enqueue otherwise
+            mutexTail = onRelease // Update tail
         })
     ]
 }
