@@ -61,6 +61,16 @@ get() // ='foo'
 ```
 Same guarantees apply as with event
 
+## AsyncVariable
+Changing state with asynchronity. The API expects locking support
+```ts
+const [set, { get, changed }, lock] = asyncVariable('default')
+await get() // ='default'
+await set('foo')
+await get() // ='foo'
+const [release, value] = await lock() // resolve after the last call's release has been called 
+```
+
 ## map, filter
 The most basic additions to any stream library.
 

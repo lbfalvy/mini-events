@@ -17,3 +17,5 @@ export type AsyncVariable<T> = {
     get: () => Promise<T>,
     changed: Subscribe<[T, T]>
 }
+
+export type Lock<T> = () => Promise<[() => void, T]>
