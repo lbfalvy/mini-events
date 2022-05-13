@@ -71,8 +71,8 @@ await get() // ='foo'
 const [release, value] = await lock() // resolve after the last call's release has been called 
 ```
 
-## map, filter
-The most basic additions to any stream library.
+## map, filter, toAsync
+Minor helper methods
 
 ### filter
 ```ts
@@ -89,4 +89,13 @@ const mapped = map(subscribe, s => [Number.parseFloat(s)])
 emit('0') // > 0
 emit('0.5') // > 0.5
 emit('meow') // > NaN
+```
+
+### toAsync
+Compatibility method for passing synchronous variable abstractions to
+APIs that expect asynchronous ones. Note that the underlying variable
+is also used to store the semaphore value.
+
+```ts
+const [set, { get, changed }, lock] = toAsync(variable, 'foo')
 ```
