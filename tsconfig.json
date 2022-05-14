@@ -2,7 +2,8 @@
     "compilerOptions": {
         "strict": true,
         "esModuleInterop": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "moduleResolution": "node"
     },
     "exclude": [
         "jest.config.ts"
