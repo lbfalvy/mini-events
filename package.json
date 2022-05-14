@@ -1,9 +1,9 @@
 {
   "name": "@lbfalvy/mini-events",
-  "version": "3.3.2",
+  "version": "3.3.3",
   "description": "Events have never been simpler.",
-  "main": "build/cjs/index.js",
-  "module": "build/esm/index.js",
+  "main": "build/cjs/src/index.js",
+  "module": "build/esm/src/index.js",
   "types": "build/types/index.d.ts",
   "repository": "https://github.com/lbfalvy/mini-events.git",
   "homepage": "https://github.com/lbfalvy/mini-events",
