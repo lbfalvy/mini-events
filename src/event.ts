@@ -8,9 +8,9 @@ export function event<T extends any[]>(): [Emit<T>, Subscribe<T>] {
     const asyncListeners = new Set<(args: T) => any>()
     return [
         ((...args: T) => {
-            listeners.forEach(listener => listener(args))
+            [...listeners].forEach(listener => listener(args))
             queueMicrotask(() => {
-                asyncListeners.forEach(listener => listener(args))
+                [...asyncListeners].forEach(listener => listener(args))
             })
         }) as Emit<T>,
         (listener, sync, once) => {

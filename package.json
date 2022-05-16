@@ -1,6 +1,6 @@
 {
   "name": "@lbfalvy/mini-events",
-  "version": "3.3.3",
+  "version": "3.3.4",
   "description": "Events have never been simpler.",
   "main": "build/cjs/src/index.js",
   "module": "build/esm/src/index.js",
@@ -14,7 +14,7 @@
     "build"
   ],
   "scripts": {
-    "build": "rollup --config",
+    "build": "rm -rf build && rollup --config",
     "test": "jest",
     "prepublishOnly": "npm run build"
   },

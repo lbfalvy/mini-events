@@ -3,7 +3,8 @@
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "downlevelIteration": true
     },
     "exclude": [
         "jest.config.ts"
