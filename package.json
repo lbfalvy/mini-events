@@ -1,6 +1,6 @@
 {
   "name": "@lbfalvy/mini-events",
-  "version": "3.3.4",
+  "version": "3.3.5",
   "description": "Events have never been simpler.",
   "main": "build/cjs/src/index.js",
   "module": "build/esm/src/index.js",
