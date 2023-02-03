@@ -71,7 +71,7 @@ await get() // ='foo'
 const [release, value] = await lock() // resolve after the last call's release has been called 
 ```
 
-## map, filter, toAsync
+## map, filter, merge
 Minor helper methods
 
 ### filter
@@ -91,11 +91,27 @@ emit('0.5') // > 0.5
 emit('meow') // > NaN
 ```
 
-### toAsync
+### merge
+```ts
+const [emit1, subscribe1] = event<[string]>()
+const [emit2, subscribe2] = event<[string]>()
+const merged = merge(subscribe1, subscribe2);
+emit1('foo') // merged> 'foo'
+emit2('bar') // merged> 'bar'
+```
+
+## toAsync
 Compatibility method for passing synchronous variable abstractions to
 APIs that expect asynchronous ones. Note that the underlying variable
 is also used to store the semaphore value.
 
 ```ts
 const [set, { get, changed }, lock] = toAsync(variable, 'foo')
+```
+
+## fromAsyncIterable
+Converts an `AsyncIterable` into an event
+
+```ts
+const changes = fromAsyncIterable(fs.watch('./foo.txt'))
 ```

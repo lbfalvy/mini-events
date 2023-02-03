@@ -4,7 +4,8 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "moduleResolution": "node",
-        "downlevelIteration": true
+        "downlevelIteration": true,
+        "lib": ["es2018"]
     },
     "exclude": [
         "jest.config.ts"

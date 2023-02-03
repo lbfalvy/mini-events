@@ -3,7 +3,7 @@ import { Emit, Subscribe } from "./types"
 /**
  * Returns an emitter and a subscriber
  */
-export function event<T extends any[]>(): [Emit<T>, Subscribe<T>] {
+export function event<T extends readonly any[]>(): [Emit<T>, Subscribe<T>] {
     const listeners = new Set<(args: T) => any>()
     const asyncListeners = new Set<(args: T) => any>()
     return [

@@ -7,7 +7,7 @@ import { Subscribe } from "./types";
  * @param predicate Mapping that returns a tuple
  * @returns Stream of return values
  */
-export function map<T extends any[], U extends any[]>(
+export function map<T extends readonly any[], U extends readonly any[]>(
     source: Subscribe<T>,
     predicate: (...args: T) => U
 ): Subscribe<U> {
