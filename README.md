@@ -106,6 +106,16 @@ emit1('foo') // merged> 'foo'
 emit2('bar') // merged> 'bar'
 ```
 
+## next
+```ts
+const [emit, subscribe] = event<[string]>()
+(async function() {
+  const [data] = await next(subscribe)
+  console.log(data)
+})()
+emit("foo") // > "foo"
+```
+
 ## toAsync
 Compatibility method for passing synchronous variable abstractions to
 APIs that expect asynchronous ones. Note that the underlying variable
