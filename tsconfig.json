@@ -1,13 +1,13 @@
 {
-    "compilerOptions": {
-        "strict": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "moduleResolution": "node",
-        "downlevelIteration": true,
-        "lib": ["es2018"]
-    },
-    "exclude": [
-        "jest.config.ts"
-    ]
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "downlevelIteration": true,
+    "lib": ["es2018"]
+  },
+  "exclude": [
+    "jest.config.ts"
+  ]
 }

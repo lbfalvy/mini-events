@@ -8,10 +8,10 @@ import { Subscribe } from "./types";
  * @returns Stream of return values
  */
 export function map<T extends readonly any[], U extends readonly any[]>(
-    source: Subscribe<T>,
-    predicate: (...args: T) => U
+  source: Subscribe<T>,
+  predicate: (...args: T) => U
 ): Subscribe<U> {
-    const [emit, subscribe] = event<U>()
-    source((...args) => emit(...predicate(...args)), true)
-    return subscribe
+  const [emit, subscribe] = event<U>()
+  source((...args) => emit(...predicate(...args)), true)
+  return subscribe
 }

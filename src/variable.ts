@@ -9,14 +9,14 @@ import { Emit, Variable } from './types'
 export function variable<T>(value: T): [Emit<[T]>, Variable<T>];
 export function variable<T>(): [Emit<[T | undefined]>, Variable<T | undefined>]
 export function variable<T>(value?: T): [Emit<[T | undefined]>, Variable<T | undefined>] {
-    let current: T | undefined = value
-    const [emit, changed] = event<[T | undefined, T | undefined]>()
-    return [
-        v => {
-            const old = current
-            current = v
-            emit(v, old)
-        },
-        { get: () => current, changed }
-    ]
+  let current: T | undefined = value
+  const [emit, changed] = event<[T | undefined, T | undefined]>()
+  return [
+    v => {
+      const old = current
+      current = v
+      emit(v, old)
+    },
+    { get: () => current, changed }
+  ]
 }
