@@ -1,3 +1,4 @@
+import { filterMap } from "../src"
 import { event } from "../src/event"
 import { filter } from "../src/filter"
 import { map } from "../src/map"
@@ -12,11 +13,11 @@ beforeEach(() => {
     cb1 = jest.fn()
 })
 
-test('only return strings starting with a dot', () => {
-    const results = filter(subscribe, s => s.startsWith('.'))
+test('only return successfully converted integers, discard others', () => {
+    const results = filterMap(subscribe, s => isNaN(parseInt(s)) ? undefined : [parseInt(s)] as const)
     results(cb1, true)
-    emit("1")
-    expect(cb1).not.toHaveBeenCalled()
     emit(".bar")
-    expect(cb1).toHaveBeenCalledWith('.bar')
+    expect(cb1).not.toHaveBeenCalled()
+    emit("1")
+    expect(cb1).toHaveBeenCalledWith(1)
 })

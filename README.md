@@ -71,7 +71,7 @@ await get() // ='foo'
 const [release, value] = await lock() // resolve after the last call's release has been called 
 ```
 
-## map, filter, merge
+## map, filter, filterMap, merge
 Minor helper methods
 
 ### filter
@@ -90,6 +90,12 @@ emit('0') // > 0
 emit('0.5') // > 0.5
 emit('meow') // > NaN
 ```
+
+#### filterMap
+Same as map except the function can return undefined to indicate that no event should be mapped
+
+This functionality isn't included in map because accidentally returning undefined is a common JS
+mistake
 
 ### merge
 ```ts
