@@ -1,5 +1,21 @@
-# Mini Events
-Events have never been simpler
+# mini-events <!-- omit in toc -->
+
+Simplified event stream and state management
+
+## Table of Contents <!-- omit in toc -->
+- [Usage](#usage)
+- [Timing guarantees](#timing-guarantees)
+- [variable](#variable)
+- [asyncVariable](#asyncvariable)
+- [Helper functions](#helper-functions)
+  - [filter](#filter)
+  - [map](#map)
+    - [filterMap](#filtermap)
+  - [merge](#merge)
+  - [next](#next)
+  - [select](#select)
+  - [toAsync](#toasync)
+  - [fromAsyncIterable](#fromasynciterable)
 
 ## Usage
 Obtain an emit-subscribe pair using the `event` factory method
@@ -41,7 +57,7 @@ const unsubscribe = subscribe((a, b) => ...)
 emit(a, b)
 ```
 
-## Guarantees regarding asynchronous operation
+## Timing guarantees
 - An event handler MAY receive events emitted before the subscribe call.
 - An event handler MUST receive events emitted after the subscribe call.
 - An event handler MUST NOT receive events emitted after the unsubscribe call.
@@ -50,8 +66,9 @@ emit(a, b)
 unsubscribed on the same microtask would not receive.
 - Flushing the microtask queue once MUST result in every event handler's completion.
 
-## Variable
-A little addition that I havve come to need quite often. Very simple.
+## variable
+A little addition that I havve come to need quite often.
+`changed` is only fired if the new value doesn't `===` the previous value.
 ```ts
 const [set, { get, changed }] = variable('default')
 get() // ='default'
@@ -61,7 +78,7 @@ get() // ='foo'
 ```
 Same guarantees apply as with event
 
-## AsyncVariable
+## asyncVariable
 Changing state with asynchronity. The API expects locking support
 ```ts
 const [set, { get, changed }, lock] = asyncVariable('default')
@@ -71,8 +88,7 @@ await get() // ='foo'
 const [release, value] = await lock() // resolve after the last call's release has been called 
 ```
 
-## map, filter, filterMap, merge
-Minor helper methods
+## Helper functions
 
 ### filter
 ```ts
@@ -92,9 +108,7 @@ emit('meow') // > NaN
 ```
 
 #### filterMap
-Same as map except the function can return undefined to indicate that no event should be mapped
-
-This functionality isn't included in map because accidentally returning undefined is a common JS
+Same as map except the function can return undefined to indicate that no event should be mapped. This functionality isn't included in map because accidentally returning undefined is a common JS
 mistake
 
 ### merge
@@ -106,7 +120,9 @@ emit1('foo') // merged> 'foo'
 emit2('bar') // merged> 'bar'
 ```
 
-## next
+### next
+Take the next event from a stream
+
 ```ts
 const [emit, subscribe] = event<[string]>()
 (async function() {
@@ -116,7 +132,19 @@ const [emit, subscribe] = event<[string]>()
 emit("foo") // > "foo"
 ```
 
-## toAsync
+### select
+Derive a variable from another
+
+```ts
+const [set, original] = variable([1, 2])
+const derived = select(original, t => t[1])
+derived.get() // = 2
+derived.changed(console.log)
+set([3, 4]) // > 4
+set([5, 4]) // nothing
+```
+
+### toAsync
 Compatibility method for passing synchronous variable abstractions to
 APIs that expect asynchronous ones. Note that the underlying variable
 is also used to store the semaphore value.
@@ -125,7 +153,7 @@ is also used to store the semaphore value.
 const [set, { get, changed }, lock] = toAsync(variable, 'foo')
 ```
 
-## fromAsyncIterable
+### fromAsyncIterable
 Converts an `AsyncIterable` into an event
 
 ```ts

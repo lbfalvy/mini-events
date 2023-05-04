@@ -1,4 +1,3 @@
-import produce from "immer";
 import { filter } from "./filter";
 import { map } from "./map";
 import { AsyncEmit, AsyncVariable, Lock, Emit, Variable } from "./types";
@@ -14,7 +13,10 @@ export function toAsync<T>(
 ): [AsyncEmit<[T]>, AsyncVariable<T>, Lock<T>] {
   const initState: AsyncState<T> = { semaphore: 1, value: init as T }
   const [set, { get, changed }] = sync(initState)
-  const release = () => set(produce(get(), x => { x.semaphore++ }))
+  const release = () => {
+    const { semaphore, ...oldVal } = get()
+    set({ ...oldVal, semaphore: semaphore + 1, })
+  }
   return [
     value => Promise.resolve(set({ ...get(), value })),
     {
@@ -28,7 +30,8 @@ export function toAsync<T>(
       )
     },
     () => new Promise(resolve => {
-      set(produce(get(), x => { x.semaphore-- }))
+      const { semaphore, ...oldVal } = get();
+      set({ ...oldVal, semaphore: semaphore - 1 })
       if (get().semaphore >= 0) {
         resolve([release, get().value])
       } else {

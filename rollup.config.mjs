@@ -1,30 +1,32 @@
 import ts from 'rollup-plugin-ts'
 import dts from 'rollup-plugin-dts'
 import { dirname } from 'path'
+import fs from 'fs/promises'
 
-const pkg = require("./package.json")
+const pkg = JSON.parse(await fs.readFile("./package.json"))
 
 const baseConfig = {
   input: 'src/index.ts',
-  preserveModules: true,
 }
 export default [{
   ...baseConfig,
   output: [{
-    dir: "build/cjs",
+    dir: dirname(pkg.main),
     format: 'cjs',
-    sourcemap: 'inline'
+    sourcemap: 'inline',
+    preserveModules: true,
   }, {
-    dir: "build/esm",
+    dir: dirname(pkg.module),
     format: 'esm',
-    sourcemap: 'inline'
+    sourcemap: 'inline',
+    preserveModules: true,
   }],
-  plugins: [ts()]
+  plugins: [ts()],
 }, {
   ...baseConfig,
   output: {
     dir: dirname(pkg.types),
-    format: 'esm'
+    format: 'esm',
   },
-  plugins: [dts()]
+  plugins: [dts()],
 }]
