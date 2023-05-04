@@ -13,6 +13,7 @@ export function variable<T>(value?: T): [Emit<[T | undefined]>, Variable<T | und
   const [emit, changed] = event<[T | undefined, T | undefined]>()
   return [
     v => {
+      if (v === current) return
       const old = current
       current = v
       emit(v, old)
