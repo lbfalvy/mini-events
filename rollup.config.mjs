@@ -11,12 +11,12 @@ const baseConfig = {
 export default [{
   ...baseConfig,
   output: [{
-    dir: dirname(pkg.main),
+    dir: dirname(dirname(pkg.main)),
     format: 'cjs',
     sourcemap: 'inline',
     preserveModules: true,
   }, {
-    dir: dirname(pkg.module),
+    dir: dirname(dirname(pkg.module)),
     format: 'esm',
     sourcemap: 'inline',
     preserveModules: true,
