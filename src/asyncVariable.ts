@@ -2,9 +2,11 @@ import { event } from './event'
 import { AsyncEmit, AsyncVariable, Emit, Lock, Subscribe } from './types'
 
 /**
- * A variable whose updates can be observed
+ * A variable whose updates can be observed, and has a lock for ordering independent
+ * writes.
+ * 
  * @param value default value
- * @returns [setter, getter, subscriber]
+ * @returns [setter, variable, lock]
  */
 export function asyncVariable<T>(value: T): [AsyncEmit<[T]>, AsyncVariable<T>, Lock<T>];
 export function asyncVariable<T>(): [AsyncEmit<[T | undefined]>, AsyncVariable<T | undefined>, Lock<T | undefined>]

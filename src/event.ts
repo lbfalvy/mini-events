@@ -1,7 +1,10 @@
 import { Emit, Subscribe } from "./types"
 
 /**
- * Returns an emitter and a subscriber
+ * Returns an emitter and a subscriber.
+ * 
+ * Subscribe takes a handler and flags and returns a function that disconnects the subscriber.
+ * Subscriptions are async by default but synchronous subscriptions are possible with the first flag.
  */
 export function event<T extends readonly any[]>(): [Emit<T>, Subscribe<T>] {
   const listeners = new Set<(args: T) => any>()

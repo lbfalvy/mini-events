@@ -1,5 +1,7 @@
 import { Subscribe } from "./types"
 
+/** Construct a mutex from an atomic swap operation represented with a `set` command and a
+ * stream of old-new value pairs. */
 export function mutex(
   set: (n: number) => Promise<void>,
   changed: Subscribe<[number, number]>

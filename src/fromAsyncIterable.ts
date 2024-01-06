@@ -1,5 +1,6 @@
 import { Subscribe } from "./types";
 
+/** Convert an async iterable into an event stream */
 export function fromAsyncIterable<T>(
   it: AsyncIterable<T>
 ): Subscribe<[T]> {

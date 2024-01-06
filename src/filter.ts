@@ -2,7 +2,7 @@ import { Subscribe } from "./types";
 import { event } from "./event";
 
 /**
- * Filter an event
+ * Filter an event stream with a predicate
  */
 export function filter<T, U extends T>(source: Subscribe<[T]>, predicate: (arg: T) => arg is U): Subscribe<[U]>
 export function filter<T extends readonly any[]>(source: Subscribe<T>, predicate: (...args: T) => boolean): Subscribe<T>

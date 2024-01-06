@@ -2,7 +2,7 @@ import { Subscribe } from "./types";
 import { event } from "./event";
 
 /**
- * Filter an event
+ * Transform an event stream and discard any undefined values from the output
  */
 export function filterMap<T extends readonly any[], U extends readonly any[]>(
   source: Subscribe<T>,

@@ -5,7 +5,7 @@
     "skipLibCheck": true,
     "moduleResolution": "node",
     "downlevelIteration": true,
-    "lib": ["es2018"],
+    "lib": ["ES2021"],
   },
   "exclude": [
     "jest.config.ts"

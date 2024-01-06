@@ -7,6 +7,11 @@ interface AsyncState<T> {
   value: T
 }
 
+/** Create an async variable from a sync variable.
+ * 
+ * This is needed because sync and async variables have very different APIs so it's impractical
+ * for an async-based API to also support a sync variable directly.
+ */
 export function toAsync<T>(
   sync: <U>(init: U) => [Emit<[U]>, Variable<U>],
   init: undefined extends T ? T|void : T
